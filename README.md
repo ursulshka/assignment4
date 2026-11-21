@@ -3,7 +3,7 @@
 Name: İlkim Dinç  
 Student number: 2024502042
 
-Bonuses claimed: **Bonus 4: Git repository** (see the end of this file).
+Bonuses claimed: **Bonus 3: Real code** and **Bonus 4: Git repository** (see the end of this file).
 
 My data in every example: songs by **Кино (Kino)**, the band I listen to.
 
@@ -832,6 +832,106 @@ one I wrote down my guess before running the code.
    exist`. `href` belongs to `<a>`, not to `<button>`.
 10. **Props are frozen.** Changing `props.title` gave
     `TypeError - Cannot assign to read only property 'title' of object '#<Object>'`.
+
+## Bonus 3: Real code
+
+Bonus 3: Real code
+
+Seven places where somebody else used destructuring. The library files are the ones `npm install`
+put into my `node_modules` (esbuild 0.28.2, typescript 5.8.3); the line numbers are from those files.
+
+**Case 1: Task Manager starter (Assignment 3), `src/App.tsx`, line 37.** Form 1.
+
+```tsx
+const [tasks, dispatch] = useReducer(taskReducer, [])
+```
+
+Without destructuring: `const pair = useReducer(taskReducer, []); const tasks = pair[0]; const dispatch = pair[1]`.
+`useReducer` returns a tuple, and the names are free to choose, which is why React returns an
+array here and not an object: every component can call them what it wants (`state`, `tasks`...).
+
+**Case 2: Task Manager starter, `src/TaskRow.tsx`, line 5.** Form 11 with form 5 inside. React props.
+
+```tsx
+export default function TaskRow({ task, onNext, onDelete }: TaskRowProps) {
+```
+
+Without destructuring: `function TaskRow(props: TaskRowProps) { const task = props.task; const onNext = props.onNext; const onDelete = props.onDelete; ... }`.
+**Props and children here:** `task`, `onNext` and `onDelete` are all props. There are no children:
+`App.tsx` (line 25) uses it as a self-closing tag, `<TaskRow key={t.id} task={t} onNext={...} onDelete={...} />`,
+so nothing is written between tags and `props.children` would be `undefined`. The `key={t.id}` is
+also not a prop: React keeps it for the list (my "key is not a prop" experiment), which is why
+`TaskRowProps` does not list `key`. The same pattern is in `App.tsx` line 21,
+`function TaskList({ tasks, dispatch }: ...)`, again only props, no children.
+
+**Case 3: esbuild, `node_modules/esbuild/lib/main.js`, line 2093.** Form 1.
+
+```js
+let [major, minor] = process.versions.node.split(".");
+if (
+  // <v12.17.0 does not work
+  +major < 12 || +major === 12 && +minor < 17 || +major === 13 && +minor < 13
+```
+
+Without destructuring: `let parts = process.versions.node.split("."); let major = parts[0]; let minor = parts[1];`.
+This is the same idea as my `parseDuration('4:39')`, only with a version number like `22.11.0`.
+The third part (patch) is simply not taken. Because `split` gives strings, the code needs `+major`
+to turn them into numbers; I used `.map(Number)` before destructuring instead.
+
+**Case 4: esbuild, `node_modules/esbuild/lib/main.js`, line 2394.** Form 6 (rename).
+
+```js
+let { port1: mainPort, port2: workerPort } = new worker_threads2.MessageChannel();
+```
+
+Without destructuring: `let channel = new worker_threads2.MessageChannel(); let mainPort = channel.port1; let workerPort = channel.port2;`.
+A good use of rename: the API calls them `port1` and `port2`, which says nothing, and the new names
+say which side each port is for. The `channel` object itself is never needed, so it never gets a name.
+
+**Case 5: TypeScript, `node_modules/typescript/lib/typescript.js`, line 4830.** Form 5 and form 6.
+
+```js
+const result = tryParseComponents(text);
+if (!result) return void 0;
+const { major, minor, patch, prerelease, build: build2 } = result;
+return new _Version(major, minor, patch, prerelease, build2);
+```
+
+Without destructuring: five lines, `const major = result.major;` and so on, or
+`new _Version(result.major, result.minor, result.patch, result.prerelease, result.build)`.
+Two things I noticed: the `if (!result) return` line just before is exactly the guard against
+pitfall 1 (destructuring `undefined`), and `build: build2` is a rename that the bundler added,
+because the file already has something else called `build`. So form 6 is also used by tools to
+avoid name clashes, not only by people.
+
+**Case 6: TypeScript, `node_modules/typescript/lib/typescript.js`, line 156529.** Form 9 and form 6.
+**I think this one makes the code worse.**
+
+```js
+const { parent: parent2 } = use;
+if (isPropertyAccessExpression(parent2)) {
+  const { name: { text: propertyName } } = parent2;
+  if (propertyName === "default") {
+```
+
+Without destructuring: `const propertyName = parent2.name.text;`.
+The nested pattern with a rename inside reads backwards: I have to read it from the middle out
+(`name`, then `text`, then "call it `propertyName`") to see that it is just `parent2.name.text`.
+The plain version is shorter, reads left to right, and makes it obvious that `name` is an object.
+Destructuring helps when you take several fields; for one deep field a dot path is clearer. The line
+before it, `const { parent: parent2 } = use`, is also longer than `const parent2 = use.parent`.
+
+**Case 7: an open-source project, Vite's React + TypeScript template,
+[`packages/create-vite/template-react-ts/src/App.tsx`](https://github.com/vitejs/vite/blob/main/packages/create-vite/template-react-ts/src/App.tsx), line 8**
+(main branch, read on 22 November 2026). Form 1.
+
+```tsx
+const [count, setCount] = useState(0)
+```
+
+Without destructuring: `const state = useState(0); const count = state[0]; const setCount = state[1];`.
+This is the first line of destructuring every new Vite + React project starts with. Like
+`useReducer` in case 1, `useState` returns a tuple so that each component can name its own state.
 
 ## Bonus 4: Git repository
 

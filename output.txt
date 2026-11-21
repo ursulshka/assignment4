@@ -1,0 +1,164 @@
+
+> destructuring-guide@0.0.0 all
+> npm run js && npm run ts
+
+
+> destructuring-guide@0.0.0 js
+> node js/arrays.mjs && node js/objects.mjs && node js/params.mjs && node js/pitfalls.mjs && tsx js/props.jsx
+
+form 1: 2 9
+form 1 (Апрель): 4 min 39 s
+form 1 (too few items): 5 31 undefined
+form 2: Печаль [ 'Группа крови', 'Кукушка' ]
+form 2 (rest with nothing left): []
+form 3: Печаль Апрель
+form 4 (empty array): Группа крови Кукушка
+form 4 (one item): Апрель Кукушка
+form 4 (undefined, null): default null
+form 5: Buy milk todo
+form 5 (Апрель): Кино 1989
+form 5 (missing field): undefined
+form 6: Апрель 1989
+form 6 (old name): ReferenceError - genre is not defined
+form 6 (new name): soviet rock
+form 7 (Кукушка, no rating): not rated yet
+form 7 (Кукушка, has duration): 6:38
+form 7 (undefined, null): not rated null
+form 8: 4:39 { title: 'Апрель', artist: 'Кино', year: 1989, genre: 'soviet rock' }
+form 8 (new object?): true
+form 9: İlkim Печаль [ 'Апрель', 'Кукушка' ]
+form 9 (is owner defined?): undefined
+form 10: genre = soviet rock
+form 10 (Кукушка): title = Кукушка
+form 10 (Кукушка): duration = 6:38
+form 10 (Кукушка): rating = undefined
+form 11: { title: 'Read', status: 'todo' }
+form 11: Печаль - Кино (1989)
+form 11 (no artist): Печаль - unknown artist (1989)
+form 11 (no argument): undefined - unknown artist (undefined)
+form 11 (no `= {}`): TypeError - Cannot destructure property 'title' of 'undefined' as it is undefined.
+form 11b (Апрель 4:39): 279 seconds
+form 11b (Печаль 5:31): 331 seconds
+form 11b (Группа крови 4:44): 284 seconds
+form 11b (Кукушка 6:38): 398 seconds
+form 12 (object): title -> Печаль
+form 12 (object): artist -> Кино
+form 12 (object): year -> 1989
+form 12 (object): duration -> 5:31
+form 12 (Map): Апрель 14
+form 12 (Map): Печаль 9
+form 12 (Map): Группа крови 3
+form 12 (array of objects): Апрель 1989
+form 12 (array of objects): Кукушка 1990
+pitfall 1: TypeError
+pitfall 1 (find returned undefined): Cannot destructure property 'year' of 'found' as it is undefined.
+pitfall 2 (null is kept): null
+pitfall 3 (with parentheses): Апрель 1989
+pitfall 4 (album changed too): КИНО (changed)
+pitfall 4 (rest shares band): true Звезда по имени Солнце
+pitfall 5 (object, any order): Апрель 1989
+pitfall 5 (array, wrong order): year = Апрель title = 1989
+A: <section><h2>Hi</h2>text</section>
+B: <section><h2>Hi</h2>text</section>
+P1 (keys of the props object): [ 'title', 'artist', 'children' ]
+P1 A: <article><h3>Апрель</h3><p>Кино</p>1989</article>
+P1 B: <article><h3>Апрель</h3><p>Кино</p>1989</article>
+P2 (between tags): <article><h3>Печаль</h3><p></p>sad song</article>
+P2 (children attr): <article><h3>Печаль</h3><p></p>sad song</article>
+P2 (both): <article><h3>Печаль</h3><p></p>from the tags</article>
+P3 string   : <div>Группа крови</div>
+P3 number   : <div>1988</div>
+P3 zero     : <div>0</div>
+P3 element  : <div><b>Кукушка</b></div>
+P3 several  : <div><b>Апрель</b><i>Печаль</i></div>
+P3 array    : <div><li>Апрель</li><li>Печаль</li></div>
+P3 undefined: <div></div>
+P3 null     : <div></div>
+P3 false    : <div></div>
+P3 true     : <div></div>
+P3 nothing  : <div></div>
+P3 function : <div></div>
+P3 called   : <div>Кукушка 6:38</div>
+P4 (rest): { id: 'kino', className: 'album', 'data-year': '1989' }
+P4: <section id="kino" class="album" data-year="1989"><h2>Кино 1989</h2>Апрель, Печаль</section>
+P4 spread first: <section class="fixed">Кукушка</section>
+P4 spread last : <section class="mine">Кукушка</section>
+P4 objects     : { className: 'fixed' } { className: 'mine' }
+P5 props   : <div class="album"><header>Кино, 1989</header><ol><li>Звезда по имени Солнце</li><li>Апрель</li><li>Печаль</li></ol><footer>3 songs</footer></div>
+P5 children: <div class="album"><header>Кино, 1989</header><ol><li>Звезда по имени Солнце</li><li>Апрель</li><li>Печаль</li></ol><footer>3 songs</footer></div>
+P6 given    : <p>Кукушка <small>6:38</small></p>
+P6 missing  : <p>Кукушка <small>?:??</small></p>
+P6 undefined: <p>Кукушка <small>?:??</small></p>
+P6 null     : <p>Кукушка <small></small></p>
+exp key     : <p>key inside the component: undefined</p>
+exp change props: TypeError - Cannot assign to read only property 'title' of object '#<Object>'
+exp change  : <p>Апрель</p>
+exp rest    : <p>Печаль / rest has title: false</p>
+
+> destructuring-guide@0.0.0 ts
+> tsx ts/arrays.ts && tsx ts/objects.ts && tsx ts/params.ts && tsx ts/types.ts && tsx ts/props.tsx
+
+form 1: 2 9
+form 1 (Апрель): 4 min 39 s
+form 2: Печаль [ 'Группа крови', 'Кукушка' ]
+form 3: Печаль Апрель
+form 4 (empty array): Группа крови Кукушка
+form 4 (undefined, null): default null
+form 5: Buy milk todo
+form 5 (Апрель): Кино 1989
+form 6: Апрель 1989
+form 7 (Кукушка, no rating): 0
+form 8: 4:39 { title: 'Апрель', artist: 'Кино', year: 1989, genre: 'soviet rock' }
+form 9: İlkim Печаль [ 'Апрель', 'Кукушка' ]
+form 10: genre = soviet rock
+form 10 (exact key): 1991 (year + 1, so it is a number)
+form 11: { title: 'Read', status: 'todo' }
+form 11: Печаль - Кино (1989)
+form 11 (no artist): Печаль - unknown artist (1989)
+form 11 (no argument): untitled - unknown artist (year?)
+form 11b (Апрель 4:39): 279
+form 11b (Кукушка 6:38): 398
+form 12 (object): title -> Печаль
+form 12 (object): artist -> Кино
+form 12 (object): year -> 1989
+form 12 (object): duration -> 5:31
+form 12 (Map): Апрель 14
+form 12 (Map): Печаль 9
+form 12 (Map): Группа крови 3
+form 12 (array of objects): Апрель 1989
+form 12 (array of objects): Кукушка 1990
+T1: 1
+T1 (a variable named string): Апрель
+T1 (typed correctly): Апрель 1989
+T2 (tuple): 279 seconds
+T2 (as const): string Апрель 1989
+T3 (after a check): ПЕЧАЛЬ
+T3 (default): SILENCE
+T4: undefined 0
+T5 (what the error protects me from): Cannot destructure property 'year' of 'found' as it is undefined.
+T5 (fixed): 0
+<section><h2>Hi</h2>text</section>
+P1 A: <article><h3>Апрель</h3><p>Кино</p>1989</article>
+P1 B: <article><h3>Апрель</h3><p>Кино</p>1989</article>
+P2 (between tags): <section><h2>Печаль</h2>sad song</section>
+P2 (children attr): <section><h2>Печаль</h2>sad song</section>
+P3 string   : <div>Группа крови</div>
+P3 number   : <div>1988</div>
+P3 zero     : <div>0</div>
+P3 element  : <div><b>Кукушка</b></div>
+P3 undefined: <div></div>
+P3 null     : <div></div>
+P3 false    : <div></div>
+P3 called   : <div>Кукушка 6:38</div>
+P4: <section id="kino" class="album" data-year="1989"><h2>Кино 1989</h2>Апрель, Печаль</section>
+P4 spread first: <section class="fixed">Кукушка</section>
+P4 spread last : <section class="mine">Кукушка</section>
+P5 props   : <div class="album"><header>Кино, 1989</header><ol><li>Звезда по имени Солнце</li><li>Апрель</li><li>Печаль</li></ol><footer>no footer</footer></div>
+P5 children: <div class="album"><header>Кино, 1989</header><ol><li>Звезда по имени Солнце</li><li>Апрель</li><li>Печаль</li></ol><footer>3 songs</footer></div>
+P6 given    : <p>Кукушка <small>6:38</small></p>
+P6 missing  : <p>Кукушка <small>?:??</small></p>
+P6 null     : <p>Кукушка <small></small></p>
+P7a with    : <blockquote title="Апрель">first line</blockquote>
+P7a without : <blockquote title="Апрель">(no lyrics yet)</blockquote>
+P7b         : <ul aria-label="Gece Kino"><li>Печаль</li><li>Кукушка</li></ul>
+P7c         : <button type="button" disabled="" aria-label="play">▶ Группа крови</button>

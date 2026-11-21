@@ -835,7 +835,7 @@ one I wrote down my guess before running the code.
 
 ## Bonus 4: Git repository
 
-Bonus 4: Git repository: PASTE THE REPOSITORY LINK HERE
+Bonus 4: Git repository: https://github.com/ursulshka/assignment4
 
 The repository has a `.gitignore` for `node_modules`, and it runs after `git clone`, `npm install`
 and `npm run all`. The history shows the work in steps (`git log --oneline`). I did the assignment
